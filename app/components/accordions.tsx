@@ -1,4 +1,4 @@
-import { format, parseISO } from "date-fns";
+import { format, isSameDay, parseISO } from "date-fns";
 import { pt } from "date-fns/locale/pt";
 import { useState } from "react";
 import { Events } from "./calendar";
@@ -34,6 +34,8 @@ export default function Accordions({
     return grouped;
   };
 
+  const today = new Date();
+
   const groupedEvents = groupEventsByMonth();
   return (
     <div className="flex flex-col gap-2">
@@ -65,7 +67,11 @@ export default function Accordions({
                     .map((event, eventIndex) => (
                       <div
                         key={eventIndex}
-                        className="p-2 border-b border-gray-300 font-normal flex flex-col gap-2 text-[0.9rem] md:text-[1.2rem]"
+                        className={`p-2 border-b border-gray-300 font-normal flex flex-col gap-2 text-[0.9rem] md:text-[1.2rem]  rounded-md ${
+                          isSameDay(new Date(event.date), today)
+                            ? "bg-yellow-100"
+                            : ""
+                        }`}
                       >
                         <div className="flex justify-between">
                           {" "}

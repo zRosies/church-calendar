@@ -194,9 +194,12 @@ const Calendar = () => {
                     events
                       .filter((event) => isSameDay(new Date(event.date), day))
                       .map((event, idx) => (
-                        <div key={idx}>
+                        <div
+                          key={idx}
+                          className="flex justify-center items-center relative"
+                        >
                           <div
-                            className="bg-[#2A9D8F] text-white text-base rounded-lg md:px-3 md:py-1 md:mt-2 cursor-pointer hidden md:flex flex-col"
+                            className="bg-[#2A9D8F] text-white text-base rounded-lg md:px-3 md:py-1 md:mt-2 cursor-pointer hidden md:flex flex-col w-full"
                             onClick={() =>
                               setOpenDialog({
                                 date: new Date(day),
@@ -208,7 +211,7 @@ const Calendar = () => {
                             {event.memberName}
                           </div>
                           <div
-                            className="absolute top-[-35px] left-[15px] md:hidden"
+                            className="relative md:hidden flex justify-center items-center  flex-col"
                             onClick={() =>
                               setOpenDialog({
                                 date: new Date(day),
@@ -218,12 +221,10 @@ const Calendar = () => {
                             }
                           >
                             <IoPersonCircleSharp className="h-7 w-7 text-[#CA6702]" />
-                            <p className="text-[0.4rem] absolute top-[25px] left-[-14px] w-[200px]">
-                              {event.memberName}
-                            </p>
+                            <p className="text-[0.4rem]">{event.memberName}</p>
                           </div>
                           <div
-                            className="absolute bg-[#0A9396] top-[-50px] right-0 cursor-pointer p-1 rounded-[50%]"
+                            className="absolute bg-[#0A9396] top-[-10px] left-[30px] md:top-[-70px] md:left-[100px] right-0 cursor-pointer p-1 rounded-[50%] w-5 h-5 md:h-12 md:w-12 flex justify-center items-center"
                             onClick={() =>
                               setOpenInfo({ date: new Date(day), open: true })
                             }
