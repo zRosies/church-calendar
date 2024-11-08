@@ -1,5 +1,9 @@
 import { Events } from "@/app/components/calendar";
-import { BookLunch, getMonthData } from "../controllers/calendar";
+import {
+  BookLunch,
+  getMonthData,
+  UpdateBookedDate,
+} from "../controllers/calendar";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -15,4 +19,13 @@ export async function POST(req: Request) {
     { message: "Event added successfully" },
     { status: 201 }
   );
+}
+
+export async function PUT(req: Request) {
+  const body = await req.json();
+  const payload = body.body;
+
+  const result = await UpdateBookedDate(payload);
+
+  return NextResponse.json(result[0], result[1]);
 }

@@ -48,13 +48,13 @@ export default function Accordions({
           <div key={index}>
             <button
               onClick={() => handleAccordionToggle(index)}
-              className="w-full text-left p-4 bg-[#264653] text-white font-bold rounded-md flex justify-between items-center"
+              className="w-full text-left p-2 md:p-4 bg-[#264653] text-white text-[0.9rem] font-bold rounded-md flex justify-between items-center"
             >
               <span>{monthLabel}</span>
               <span>{isOpen ? "-" : "+"}</span>
             </button>
             {isOpen && (
-              <div className=" p-4 flex flex-col gap-4">
+              <div className="p-4 flex flex-col gap-4">
                 {/* Render events for the current month */}
                 {monthEvents.length > 0 ? (
                   monthEvents
@@ -82,7 +82,10 @@ export default function Accordions({
                       </div>
                     ))
                 ) : (
-                  <p>No events for this month.</p>
+                  <p className="font-normal text-[1rem]">
+                    {" "}
+                    Nenhum almoço marcado para este mês ainda.
+                  </p>
                 )}
               </div>
             )}

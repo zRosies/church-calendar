@@ -31,3 +31,58 @@ export async function BookLunch(newEvent: Events) {
   );
   return result;
 }
+export async function UpdateBookedDate(newEvent: Events) {
+  const collection = await initDb("calendar", "months");
+
+  console.log(newEvent);
+  try {
+    const result = await collection.updateOne(
+      { "events.date": newEvent.date },
+      {
+        $set: {
+          "events.$": {
+            ...newEvent,
+          },
+        },
+      }
+    );
+
+    console.log(result);
+    if (result.modifiedCount > 0) {
+      return [
+        { messsage: "Booked date deleted successfully" },
+        { status: 200 },
+      ];
+    }
+    return [
+      { messsage: `No booked date found with this ID: ${newEvent.date}` },
+      { status: 404 },
+    ];
+  } catch (error) {
+    throw new Error(`Error deleting booked date: ${error}`);
+  }
+}
+export async function DeleteBookedDate(dateId: string) {
+  const collection = await initDb("calendar", "months");
+
+  try {
+    const result = await collection.updateOne(
+      { "events.date": dateId },
+      { $pull: { events: { date: dateId } } }
+    );
+
+    console.log(result);
+    if (result.modifiedCount > 0) {
+      return [
+        { messsage: "Booked date deleted successfully" },
+        { status: 200 },
+      ];
+    }
+    return [
+      { messsage: `No booked date found with this ID: ${dateId}` },
+      { status: 404 },
+    ];
+  } catch (error) {
+    throw new Error(`Error deleting booked date: ${error}`);
+  }
+}

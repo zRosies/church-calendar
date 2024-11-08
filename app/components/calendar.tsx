@@ -121,13 +121,15 @@ const Calendar = () => {
   const startOfCalendar = startOfWeek(start, { weekStartsOn: 1 });
   const offset = differenceInDays(start, startOfCalendar); // Calcula o deslocamento
 
+  console.log(events);
+
   return (
-    <div className="border border-gray-300 rounded-lg overflow-hidden shadow-lg flex flex-col-reverse md:flex-row justify-between mx-[20px]">
+    <div className="border border-gray-300 rounded-lg overflow-hidden shadow-lg flex flex-col-reverse md:flex-row justify-between mx-[10px] md:mx-[20px]">
       <div
         className="py-10 text-2xl font-extrabold px-2 flex border flex-col max-w-[700px] w-full max-h-[700px] overflow-y-scroll gap-4 shadow-md md:p-4"
         style={{ scrollbarWidth: "thin" }}
       >
-        <p> Almoços da ala</p>
+        <p className="text-[1rem] md:text-[1.2rem]"> Almoços da ala</p>
 
         <div className="space-y-4">
           <Accordions months={months} events={events} />
@@ -186,65 +188,64 @@ const Calendar = () => {
                   {format(day, "d")}
                 </p>
                 <div className="absolute bottom-0 left-0 right-0">
-                  {events.length > 0 &&
-                    (events.filter((event) =>
-                      isSameDay(parseISO(event.date), day)
-                    ).length > 0 ? (
-                      events
-                        .filter((event) => isSameDay(new Date(event.date), day))
-                        .map((event, idx) => (
-                          <div key={idx}>
-                            <div
-                              className="bg-[#2A9D8F] text-white text-base rounded-lg md:px-3 md:py-1 md:mt-2 cursor-pointer hidden md:flex flex-col"
-                              onClick={() =>
-                                setOpenDialog({
-                                  date: new Date(day),
-                                  open: true,
-                                  booked: true,
-                                })
-                              }
-                            >
-                              {event.memberName}
-                            </div>
-                            <div
-                              className="absolute top-[-35px] left-[15px] md:hidden"
-                              onClick={() =>
-                                setOpenDialog({
-                                  date: new Date(day),
-                                  open: true,
-                                  booked: true,
-                                })
-                              }
-                            >
-                              <IoPersonCircleSharp className="h-7 w-7 text-[#F4A261]" />
-                              <p className="text-[0.4rem] absolute top-[25px] left-[-14px] w-[200px]">
-                                {event.memberName}
-                              </p>
-                            </div>
-                            <div
-                              className="absolute bg-[#1bc827] top-[-50px] right-0 cursor-pointer p-1 rounded-[50%]"
-                              onClick={() =>
-                                setOpenInfo({ date: new Date(day), open: true })
-                              }
-                            >
-                              <HouseIcon />
-                            </div>
+                  {events.filter((event) =>
+                    isSameDay(parseISO(event.date), day)
+                  ).length > 0 ? (
+                    events
+                      .filter((event) => isSameDay(new Date(event.date), day))
+                      .map((event, idx) => (
+                        <div key={idx}>
+                          <div
+                            className="bg-[#2A9D8F] text-white text-base rounded-lg md:px-3 md:py-1 md:mt-2 cursor-pointer hidden md:flex flex-col"
+                            onClick={() =>
+                              setOpenDialog({
+                                date: new Date(day),
+                                open: true,
+                                booked: true,
+                              })
+                            }
+                          >
+                            {event.memberName}
                           </div>
-                        ))
-                    ) : (
-                      <div
-                        className="absolute text-[#264653] top-[-30px] md:top-[-80px] right-[12px] md:right-[60px] cursor-pointer hover:text-[#2A9D8F] duration-200 animate-pulse"
-                        onClick={() =>
-                          setOpenDialog({
-                            date: new Date(day),
-                            open: true,
-                            booked: false,
-                          })
-                        }
-                      >
-                        <FaPlusCircle className="h-5 w-5 md:h-12 md:w-12 " />
-                      </div>
-                    ))}
+                          <div
+                            className="absolute top-[-35px] left-[15px] md:hidden"
+                            onClick={() =>
+                              setOpenDialog({
+                                date: new Date(day),
+                                open: true,
+                                booked: true,
+                              })
+                            }
+                          >
+                            <IoPersonCircleSharp className="h-7 w-7 text-[#CA6702]" />
+                            <p className="text-[0.4rem] absolute top-[25px] left-[-14px] w-[200px]">
+                              {event.memberName}
+                            </p>
+                          </div>
+                          <div
+                            className="absolute bg-[#0A9396] top-[-50px] right-0 cursor-pointer p-1 rounded-[50%]"
+                            onClick={() =>
+                              setOpenInfo({ date: new Date(day), open: true })
+                            }
+                          >
+                            <HouseIcon />
+                          </div>
+                        </div>
+                      ))
+                  ) : (
+                    <div
+                      className="absolute text-[#264653] top-[-30px] md:top-[-80px] right-[12px] md:right-[60px] cursor-pointer hover:text-[#2A9D8F] duration-200 animate-pulse"
+                      onClick={() =>
+                        setOpenDialog({
+                          date: new Date(day),
+                          open: true,
+                          booked: false,
+                        })
+                      }
+                    >
+                      <FaPlusCircle className="h-5 w-5 md:h-12 md:w-12 " />
+                    </div>
+                  )}
                 </div>
               </div>
             );
