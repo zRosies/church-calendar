@@ -219,7 +219,7 @@ const Calendar = () => {
                             <p className="text-[0.4rem]">{event.memberName}</p>
                           </div>
                           <div
-                            className="absolute bg-[#0A9396] top-[-10px] left-[30px] md:top-[-70px] md:left-[100px] right-0 cursor-pointer p-1 rounded-[50%] w-5 h-5 md:h-12 md:w-12 flex justify-center items-center"
+                            className="absolute bg-[#CA6702] top-[-10px] left-[30px] md:top-[-70px] md:left-[90px] right-0 cursor-pointer p-1 rounded-[50%] w-5 h-5 md:h-12 md:w-12 flex justify-center items-center"
                             onClick={() =>
                               setOpenInfo({ date: new Date(day), open: true })
                             }
@@ -230,7 +230,7 @@ const Calendar = () => {
                       ))
                   ) : (
                     <div
-                      className="absolute text-[#264653] top-[-30px] md:top-[-80px] right-[12px] md:right-[60px] cursor-pointer hover:text-[#2A9D8F] duration-200 animate-pulse"
+                      className="absolute text-[#264653] top-[-30px] md:top-[-80px] right-[20px] md:right-[48px] cursor-pointer hover:text-[#2A9D8F] duration-200 animate-pulse"
                       onClick={() =>
                         setOpenDialog({
                           date: new Date(day),
