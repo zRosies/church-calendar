@@ -18,11 +18,11 @@ export default function Accordions({
   };
 
   const groupEventsByMonth = () => {
-    const grouped: any = {};
+    const grouped: { [key: string]: Events[] } = {};
 
     events.forEach((event) => {
-      const eventDate: any = parseISO(event.date);
-      const monthKey: any = format(eventDate, "MMMM yyyy", { locale: pt });
+      const eventDate = parseISO(event.date);
+      const monthKey: string = format(eventDate, "MMMM yyyy", { locale: pt });
 
       if (!grouped[monthKey]) {
         grouped[monthKey] = [];
@@ -38,10 +38,13 @@ export default function Accordions({
 
   const groupedEvents = groupEventsByMonth();
   return (
-    <div className="flex flex-col gap-2">
+    <div
+      className="flex flex-col gap-2 max-h-[700px] overflow-y-scroll custom-scroll md:px-2"
+      style={{ scrollbarWidth: "thin" }}
+    >
       {months.toReversed().map((month, index) => {
-        const monthLabel = format(month, "MMMM yyyy", { locale: pt });
-        const isOpen = openAccordion === index;
+        const monthLabel: string = format(month, "MMMM yyyy", { locale: pt });
+        const isOpen: boolean = openAccordion === index;
 
         // Get events for the specific month
         const monthEvents: Events[] = groupedEvents[monthLabel] || []; // Fetch events for this month
@@ -67,7 +70,7 @@ export default function Accordions({
                     .map((event, eventIndex) => (
                       <div
                         key={eventIndex}
-                        className={`p-2 border-b border-gray-300 font-normal flex flex-col gap-2 text-[0.9rem] md:text-[1.2rem]  rounded-md ${
+                        className={`p-2 border-b border-gray-300 font-normal flex flex-col gap-2 text-[0.9rem] md:text-[1rem]  rounded-md ${
                           isSameDay(new Date(event.date), today)
                             ? "bg-yellow-100"
                             : ""
@@ -75,10 +78,10 @@ export default function Accordions({
                       >
                         <div className="flex justify-between">
                           {" "}
-                          <p className="font-bold">
+                          <p className="font-bold text-[0.8rem]">
                             Membro(a): {event.memberName}
                           </p>{" "}
-                          <p className="font-bold">
+                          <p className="font-bold  text-[0.8rem]">
                             Data: {format(event.date, "dd/MM/yy")}
                           </p>{" "}
                         </div>

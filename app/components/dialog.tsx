@@ -22,7 +22,7 @@ const Dialog: React.FC<ModalProps> = ({
   dayPicked,
   booked,
 }) => {
-  const [isloading, setIsloading] = useState(false);
+  const [isloading, setIsloading] = useState({ add: false, delete: false });
 
   const bookedData: Events | undefined = useMemo(() => {
     const bookedInfo = bookedDates.find((element) => {
@@ -39,9 +39,9 @@ const Dialog: React.FC<ModalProps> = ({
 
   async function BookLunch(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setIsloading(true);
+    setIsloading({ ...isloading, add: true });
 
-    if (isloading) {
+    if (isloading.add) {
       return;
     }
 
@@ -67,7 +67,7 @@ const Dialog: React.FC<ModalProps> = ({
       if (!response.ok) {
         throw new Error("Failed to book lunch");
       }
-      setIsloading(false);
+      setIsloading({ ...isloading, add: false });
       onClose(false);
       window.location.reload();
     } catch (error) {
@@ -77,10 +77,10 @@ const Dialog: React.FC<ModalProps> = ({
 
   async function CancelLunch(e: React.FormEvent<HTMLButtonElement>) {
     e.preventDefault();
-    if (isloading) {
+    setIsloading({ ...isloading, delete: true });
+    if (isloading.delete) {
       return;
     }
-    setIsloading(true);
 
     const date = bookedData?.date || null;
     const response = await fetch(`/api/calendar/${date}`, {
@@ -93,17 +93,17 @@ const Dialog: React.FC<ModalProps> = ({
       throw new Error("Failed to cancel lunch");
     }
 
-    setIsloading(false);
+    setIsloading({ ...isloading, add: false });
     window.location.reload();
   }
 
   async function UpdateAppointment(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setIsloading(true);
+    setIsloading({ ...isloading, add: true });
 
     const form = e.currentTarget;
 
-    if (isloading) {
+    if (isloading.add) {
       return;
     }
 
@@ -132,7 +132,7 @@ const Dialog: React.FC<ModalProps> = ({
       throw new Error("Failed to cancel lunch");
     }
 
-    setIsloading(false);
+    setIsloading({ ...isloading, add: false });
     window.location.reload();
   }
 
@@ -201,11 +201,13 @@ const Dialog: React.FC<ModalProps> = ({
           <div className="flex gap-4">
             <button
               onClick={(e) => CancelLunch(e)}
-              className=" w-full text-red-500 border-2 border-red-300 p-3 rounded-md flex justify-center items-center group gap-2 hover:bg-red-600 hover:text-white duration-200"
+              className={` w-full text-red-500 border-2 border-red-300 p-3 rounded-md flex justify-center items-center group gap-2 hover:bg-red-600 hover:text-white duration-200 ${
+                !booked && "hidden"
+              }`}
             >
               <span>Cancelar</span>
               <FaTrashAlt className="text-red-500 group-hover:text-white" />
-              {isloading && (
+              {isloading.delete && (
                 <LuLoader2 className="text-white animate-loading" />
               )}
             </button>
@@ -215,7 +217,7 @@ const Dialog: React.FC<ModalProps> = ({
                 className="bg-[#264653] text-white p-3 rounded-md w-full flex justify-center gap-2 items-center"
               >
                 Alterar
-                {isloading && (
+                {isloading.add && (
                   <LuLoader2 className="text-white animate-loading" />
                 )}
               </button>
@@ -225,7 +227,7 @@ const Dialog: React.FC<ModalProps> = ({
                 className="bg-[#264653] text-white p-3 rounded-md w-full flex justify-center items-center gap-2"
               >
                 Adicionar
-                {isloading && (
+                {isloading.add && (
                   <LuLoader2 className="text-white animate-loading" />
                 )}
               </button>

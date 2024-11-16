@@ -7,8 +7,8 @@ interface Context {
   };
 }
 
-export async function DELETE(req: Request, context: Context) {
-  const { id } = context.params;
+export async function DELETE(req: Request, context: unknown) {
+  const { id } = await (context as Context).params;
 
   const result = await DeleteBookedDate(id);
 

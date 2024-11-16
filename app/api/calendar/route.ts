@@ -13,12 +13,8 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const body: Events = await req.json();
-  const data = await BookLunch(body);
-
-  return NextResponse.json(
-    { message: "Event added successfully" },
-    { status: 201 }
-  );
+  const result = await BookLunch(body);
+  return NextResponse.json(result[0], result[1]);
 }
 
 export async function PUT(req: Request) {

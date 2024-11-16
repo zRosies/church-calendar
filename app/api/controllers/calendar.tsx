@@ -1,4 +1,4 @@
-import { ObjectId } from "mongodb";
+import { ObjectId, PushOperator } from "mongodb";
 import { initDb } from "../connect";
 
 export async function getMonthData() {
@@ -16,6 +16,11 @@ export interface Events {
   notes: string;
 }
 
+interface EventsDocument extends Document {
+  _id: ObjectId;
+  events: Event[]; // Array of Event objects
+}
+
 export async function BookLunch(newEvent: Events) {
   const collection = await initDb("calendar", "months");
 
@@ -26,10 +31,17 @@ export async function BookLunch(newEvent: Events) {
         events: {
           ...newEvent,
         },
-      },
+      } as PushOperator<EventsDocument>,
     }
   );
-  return result;
+
+  if (result.modifiedCount > 0) {
+    return [{ messsage: "Booked date deleted successfully" }, { status: 200 }];
+  }
+  return [
+    { messsage: `No booked date found with this ID: ${newEvent.date}` },
+    { status: 404 },
+  ];
 }
 export async function UpdateBookedDate(newEvent: Events) {
   const collection = await initDb("calendar", "months");
@@ -68,7 +80,7 @@ export async function DeleteBookedDate(dateId: string) {
   try {
     const result = await collection.updateOne(
       { "events.date": dateId },
-      { $pull: { events: { date: dateId } } }
+      { $pull: { events: { date: dateId } } as PushOperator<EventsDocument> }
     );
 
     console.log(result);

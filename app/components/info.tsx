@@ -1,7 +1,7 @@
 "use client";
 import React, { useMemo } from "react";
 import { Events } from "./calendar";
-import { format, formatDate, isSameDay, parseISO } from "date-fns";
+import { format, isSameDay, parseISO } from "date-fns";
 
 interface ModalProps {
   isOpen: boolean;

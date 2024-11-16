@@ -16,10 +16,8 @@ import {
 } from "date-fns";
 import { pt } from "date-fns/locale/pt";
 import Dialog from "./dialog";
-import { FaHouseMedicalCircleCheck } from "react-icons/fa6";
 import { FaPlusCircle } from "react-icons/fa";
 import { IoPersonCircleSharp } from "react-icons/io5";
-import { SiLighthouse } from "react-icons/si";
 
 import Information from "./info";
 import HouseIcon from "./houseIcon";
@@ -124,11 +122,8 @@ const Calendar = () => {
   console.log(events);
 
   return (
-    <div className="border border-gray-300 rounded-lg overflow-hidden shadow-lg flex flex-col-reverse md:flex-row justify-between mx-[10px] md:mx-[20px]">
-      <div
-        className="py-10 text-2xl font-extrabold px-2 flex border flex-col max-w-[700px] w-full max-h-[700px] overflow-y-scroll gap-4 shadow-md md:p-4"
-        style={{ scrollbarWidth: "thin" }}
-      >
+    <div className="border border-gray-300 rounded-lg overflow-hidden shadow-lg flex flex-col-reverse md:flex-row justify-between mx-[10px] md:mx-[20px] md:gap-12">
+      <div className="py-10 text-2xl font-extrabold px-2 flex border flex-col max-w-[400px] w-full  gap-4 shadow-md md:p-4">
         <p className="text-[1rem] md:text-[1.2rem]"> Almoços da ala</p>
 
         <div className="space-y-4">
